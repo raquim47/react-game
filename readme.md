@@ -25,8 +25,43 @@
 - 1-9. 리액트에서는 직접 DOM 요소에 접근(document.querySelector 등등)하는 대신 useRef훅으로 가상 DOM에 접근하는 것을 권장한다. (코드 간결화, 성능 최적화)
 
 - 1-10. 리액트에서 컴포넌트가 렌더링 되는 경우
-  - 1. 최초렌더링
-  - 2. 컴포넌트의 Props 변경
-  - 3. 컴포넌트의 State 변경
-  - 4. 부모 컴포넌트의 리렌더링
-  - 5. 컴포넌트의 Context가 변경
+  - 최초렌더링
+  - 컴포넌트의 Props 변경
+  - 컴포넌트의 State 변경
+  - 부모 컴포넌트의 리렌더링
+  - 컴포넌트의 Context가 변경
+
+- 1-11. React는 setState() 메서드를 모아서 한 번에 처리하여 성능을 최적화하는 방식을 사용한다. 때문에 연속적으로 호출되는 setState에 대한 렌더링이 중복되지 않고, 최종적으로 한 번만 실행된다
+
+### 끝말잇기
+
+- 2-1. 웹팩. 애플리케이션에서 사용되는 모든 자원(JavaScript, CSS, 이미지 등)을 모듈로 보고 이를 하나의 번들 파일로 묶어서 처리
+  1. npm init
+  2. npm i react react-dom
+  3. npm -D webpack webpack-cli
+
+- 2-2. 웹팩 데브 서버와 핫 리로딩
+  - npm i react-refresh @pmmmwh/react-refresh-webpack-plugin -D
+  - npm i -D webpack-dev-server
+  ```
+    // pakage.json 수정
+    "scripts": {
+      "dev": "webpack serve --env development"
+    },
+    // webpack.config.js 플러그인 장착
+    const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin';
+
+    plugins: [
+      new ReactRefreshWebpackPlugin(),
+    ],
+
+    devServer: {
+      devMiddleware: { publicPath: '/dist' },
+      static: { directory: path.resolve(__dirname) },
+      hot: true
+    }
+  ```
+- 2-3. 컨트롤드 인풋
+  - 컨트롤드 인풋이란, input태그에 value와 onChange 속성을 지정해서 제어할 수 있게 만든 것.
+  - 유효성 검사 등 value값을 활용하는 경우에 필요. 
+  - 언컨트롤드 인풋에서 value값이 필요하다면 defaultValue로 넣을 것.
