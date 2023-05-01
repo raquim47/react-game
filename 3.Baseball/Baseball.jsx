@@ -26,7 +26,7 @@ const Baseball = () => {
     setTries([]);
   };
 
-  const onSubmitForm = (e) => {
+  const onSubmitForm = useCallback((e) => {
     e.preventDefault();
     if (value === answer.join('')) {
       setTries((prev) => [...prev, { try: value, result: '홈런' }]);
@@ -61,9 +61,9 @@ const Baseball = () => {
     }
     setValue('');
     inputEl.current.focus();
-  };
+  }, [value, answer]);
 
-  const onChangeInput = (e) => setValue(e.target.value);
+  const onChangeInput = useCallback((e) => setValue(e.target.value), []);
 
   return (
     <>
