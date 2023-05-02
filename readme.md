@@ -132,4 +132,50 @@ Try.displayName = 'Try';
 ### 4-2. useRef의 또 다른 쓰임
 - 일반적인 가변값을 저장하는 데 사용
 - 변수를 useRef로 저장하면, 컴포넌트가 리렌더링될 때 변수값이 유지되는 효과가 있음.
+- state와 다르게 값이 바뀌어도 재렌더링이 없음.
 - 이벤트 핸들러와 같은 함수에서 지속적으로 사용되는 값을 저장하는 데 유용
+
+## 5. 가위바위보 게임
+
+### 5-1. 고차함수 패턴
+```
+const onClickDiv = (text) => {
+    console.log(text)
+  }
+<div onClick={() => onClickDiv('hi')}>h</div>;
+// 아래와 같이 고차함수를 활용하여 변경 가능
+const onClickDiv = (text) => () => {
+    console.log(text)
+  }
+<div onClick={onClickDiv('hi')}>h</div>;
+// event 객체 전달
+const onClickDiv = (e,text) => {
+    console.log(e.target)
+    console.log(text)
+  }
+<div onClick={(e) => onClickDiv(e,'hi')}>h</div>;
+// event 객체 전달 고차 함수 패턴
+const onClickDiv = (text) => (e) => {
+    console.log(e.target);
+    console.log(text)
+  }
+<div onClick={onClickDiv('hi')}>h</div>;
+```
+
+### 5-2. 리액트 라이프 사이클
+- 리액트 라이프사이클 : 컴포넌트가 생성되고 제거되는 과정에서 일어나는 이벤트와 메서드.
+1. 마운트 : 컴포넌트가 DOM에 삽입될 때 발생하는 이벤트. 이 단계에서는 컴포넌트의 초기 상태를 설정하고, 필요한 데이터를 불러오는 등의 작업을 수행.
+2. 업데이트 : 컴포넌트의 props, state가 변경될 때 발생하는 이벤트. 이 단계에서는 변경된 속성과 상태를 반영하여 렌더링을 업데이트.
+3. 언마운트 : 컴포넌트가 DOM에서 제거될 때 발생하는 이벤트.
+
+### 5-3. useEffect로 라이프 사이클 다루기
+- useEffect: 클래스 컴포넌트의 라이프사이클 메서드와 비슷한 역할을 하는 Hook
+- useEffect에서 라이프사이클 메서드를 대체하는 방법.
+  1. 마운트: 의존성 배열이 비어있는 경우 ([]), 컴포넌트가 마운트된 후에만 이펙트가 실행.
+  2. 업데이트: 의존성 배열이 특정 상태 또는 속성을 포함하는 경우, 해당 값이 업데이트 될 때마다 이펙트가 실행.
+  3. 언마운트: 이펙트 함수에서 정리(cleanup) 함수를 return하면, 컴포넌트가 언마운트되거나 의존성 배열의 값이 변경될 때 호출
+
+### 5-4. useLayoutEffect
+- useEffect는 렌더링 결과가 DOM에 반영된 이후에 비동기적으로 실행.
+- useLayoutEffect는 렌더링 결과가 DOM에 반영된 직후, 브라우저가 실제로 화면을 그리기 전에 동기적으로 실행.
+- DOM 요소의 크기를 조절하거나 애니메이션을 적용하는 등의 작업을 할 때 사용.
