@@ -179,3 +179,13 @@ const onClickDiv = (text) => (e) => {
 - useEffect는 렌더링 결과가 DOM에 반영된 이후에 비동기적으로 실행.
 - useLayoutEffect는 렌더링 결과가 DOM에 반영된 직후, 브라우저가 실제로 화면을 그리기 전에 동기적으로 실행.
 - DOM 요소의 크기를 조절하거나 애니메이션을 적용하는 등의 작업을 할 때 사용.
+
+## 6. 로또 추첨
+
+## 6-1. setTimeout 사용시 주의점
+- 컴포넌트가 사라질 경우 setTimeout는 메모리 상에서 계속 실행
+- 해당 코드에선 useEffect에서 실행한 setTimeout을 useRef 배열에 담아 return 함수에서 clearTimeout.
+
+## 6-2. useMemo (해당 코드에선 사용하지 않음)
+- useMemo는 함수가 첫번째 호출되었을 때의 값을 캐시(저장), 컴포넌트가 다시 렌더링 되어도 (의존성 배열 값이 변하지 않으면) 함수를 다시 호출하지 않고 저장된 값을 사용.
+- useCallback은 함수 자체를 기억(재랜더링 됐을 때 함수를 새로 생성하지 않음), useMemo는 값을 기억
