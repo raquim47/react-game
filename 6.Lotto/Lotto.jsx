@@ -16,7 +16,7 @@ const getWinNumbers = () => {
 }
 
 const Lotto = () => {
-  // const lottoNumbers = () => getWinNumbers();
+  // const lottoNumbers = useMemo(() => getWinNumbers());
   const [winNumbers, setWinNumbers] = useState(getWinNumbers);
   const [winBalls, setWinBalls] = useState([]);
   const [bonus, setBonus] = useState(null);

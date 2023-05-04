@@ -188,4 +188,31 @@ const onClickDiv = (text) => (e) => {
 
 ## 6-2. useMemo (해당 코드에선 사용하지 않음)
 - useMemo는 함수가 첫번째 호출되었을 때의 값을 캐시(저장), 컴포넌트가 다시 렌더링 되어도 (의존성 배열 값이 변하지 않으면) 함수를 다시 호출하지 않고 저장된 값을 사용.
+
+## 6-3. useCallback
 - useCallback은 함수 자체를 기억(재랜더링 됐을 때 함수를 새로 생성하지 않음), useMemo는 값을 기억
+- 자식 컴포넌트에 props로 함수를 넘길 때는 useCallback을 해줘야한다. useCallback이 없으면 매번 새로운 함수가 생성되고 그 함수를 받는 자식 컴포넌트 또한 무의미하게 재렌더링되게 된다.
+
+## 6-4. useEffect를 componentDidUpdate로 쓰기
+- useEffect를 componentDidUpdate로 쓰고 싶다면(마운트될 때는 실행X)
+```
+const isMount = useRef(false);
+useEffect(() => {
+  if(!isMount.current){
+     isMount.current = true;
+  } else {
+    // 실행 코드 
+    // 마운트 될 때 실행되지 않고 '바뀌는 값'이 바뀔 때만 실행
+  }
+}, [바뀌는 값])
+```
+
+## 7. 틱택토
+
+### 7-1. useReducer
+-  상태 값이 여러 개일 때 useReducer를 사용하여 복잡한 상태 관리가 가능
+- 
+```
+const [state, dispatch] = useReducer(reducer, initialState);
+```
+
