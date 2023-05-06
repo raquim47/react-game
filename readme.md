@@ -210,9 +210,47 @@ useEffect(() => {
 ## 7. 틱택토
 
 ### 7-1. useReducer
--  상태 값이 여러 개일 때 useReducer를 사용하여 복잡한 상태 관리가 가능
-- 
+- 상태 값이 여러 개일 때 useReducer를 사용하여 복잡한 상태 관리가 가능
+- 리덕스는 state가 동기적으로 바뀌지만 useReducer는 비동기로 바뀐다는 것에 유의할 것
 ```
 const [state, dispatch] = useReducer(reducer, initialState);
 ```
 
+## 8. 지뢰찾기
+
+### 8-1. Context Api
+- React에서 전역 상태를 관리하기 위한 기능을 제공하는 API
+- 작은 규모의 애플리케이션에서는 Redux보다 더 적은 코드로 전역 상태를 관리
+```
+const TableContext = createContext({
+  tableData: [],
+  dispatch: () => {},
+});
+const Mine = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <TableContext.Provider value={{ tableData: state.tableData, dispatch }}>
+      <Form />
+      <div>{state.timer}</div>
+      <Table />
+      <div>{state.result}</div>
+    </TableContext.Provider>
+  );
+};
+```
+
+### 8-2. Context API 성능 최적화 유의점
+```
+const Mine = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+  return (
+    <TableContext.Provider value={{ tableData: state.tableData, dispatch }}>
+      <Form />
+      <div>{state.timer}</div>
+      <Table />
+      <div>{state.result}</div>
+    </TableContext.Provider>
+  );
+};
+```
+- value에 직접 객체를 넘기면 해당 컴포넌트가 리렌더링될 때 마다 객체가 매번 새로 생긴다. 객체가 새로 생기면 Context API를 쓰는 자식들도 전부 리렌더링되기 때문에 useMemo로 객체를 캐싱해준다.
